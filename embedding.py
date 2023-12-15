@@ -4,7 +4,7 @@ import pandas as pd
 from openai import OpenAI
 
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "API_key"
 
 def read_text_file(file_path):
     try:
