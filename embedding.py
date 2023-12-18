@@ -7,7 +7,7 @@ from PyPDF2 import PdfReader
 from pptx import Presentation
 
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "Api-key"
 # Initialize OpenAI client
 client = OpenAI()
 
