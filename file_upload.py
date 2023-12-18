@@ -1,5 +1,5 @@
 import os
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 from pptx import Presentation
 
 def save_uploaded_file(folder_path: str, file):
@@ -11,9 +11,9 @@ def save_uploaded_file(folder_path: str, file):
 def extract_text_from_pdf(pdf_path: str) -> str:
     text = ""
     with open(pdf_path, "rb") as file:
-        pdf_reader = PdfFileReader(file)
-        for page_num in range(pdf_reader.numPages):
-            text += pdf_reader.getPage(page_num).extractText()
+        pdf_reader = PdfReader(file)
+        for page_num in range(len(pdf_reader.pages)):
+            text += pdf_reader.pages[page_num].extract_text()
     return text
 
 def extract_text_from_ppt(ppt_path: str) -> str:
