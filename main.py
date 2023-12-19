@@ -6,6 +6,7 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Depends, Bod
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from embedding import process_files
+import uvicorn
 from web_scrap import extract_text_from_url
 from file_upload import save_uploaded_file, extract_text_from_pdf, extract_text_from_ppt
 
@@ -23,12 +24,14 @@ class URLInput(BaseModel):
 # FastAPI endpoint for extracting text from a website
 @app.post("/extract-text/", tags=["Website Text Extraction"])
 async def extract_text(data: URLInput):
-    # Extract the website name from the URL
-    website_name = urlparse(data.url).netloc
-    # Call the function to extract text from the provided URL
-    extract_data = extract_text_from_url(data.url, website_name)
-    return JSONResponse(content={"status": 200, "message": extract_data})
-
+    try:
+        # Extract the website name from the URL
+        website_name = urlparse(data.url).netloc
+        # Call the function to extract text from the provided URL
+        extract_data = extract_text_from_url(data.url, website_name)
+        return extract_data
+    except Exception as e:
+        return extract_data
 
 
 # Dependency function to get existing folders in the "data" directory
@@ -47,18 +50,19 @@ async def read_existing_folders():
         raise JSONResponse(content={"status":401, "massage":f"An error occurred: {str(e)}"})
 
 
-
 # FastAPI endpoint for uploading a file to a specified folder
 @app.post("/upload-file/", tags=["File Upload"])
 async def upload_file(folder_name: str = Form(...), file: UploadFile = File(...)):
     try:
         # Check if the file is valid
-        allowed_extensions = {'.txt','.docx','.doc', '.csv', '.json', '.pdf', '.ppt', '.pptx'}
+        allowed_extensions = {'.txt', '.docx', '.doc', '.pdf', '.ppt', '.pptx'}
         if not file.filename.lower().endswith(tuple(allowed_extensions)):
-            raise JSONResponse(content={"status":401, "massage":"Unsupported file type. Only .txt, .csv, .json, .pdf, .ppt, .pptx files are allowed."})
+            return JSONResponse(content={"status": 401, "message": "Unsupported file type. Only .txt, .csv, .json, .pdf, .ppt, .pptx files are allowed."})
 
         current_directory = os.getcwd()
         full_input_directory = os.path.join(current_directory, "data", folder_name)
+
+        # Only create the folder if the file type is allowed
         os.makedirs(full_input_directory, exist_ok=True)
 
         # Save the uploaded file to the specified folder
@@ -69,7 +73,7 @@ async def upload_file(folder_name: str = Form(...), file: UploadFile = File(...)
 
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
-        return JSONResponse(content={"status": 500, "message": "Unsupported file type. Only .txt, .csv, .json, .pdf, .ppt, .pptx files are allowed."})
+        return JSONResponse(content={"status": 500, "message": "Internal server error"})
 
 
 # FastAPI endpoint for processing files in a specified directory
@@ -94,3 +98,7 @@ def process_with_path_parameter(input_directory: str):
         return JSONResponse(content={"status": 401, "message": f"ValueError: {str(ve)}"})
     except Exception as e:
         return JSONResponse(content={"status": 401, "message": f"An error occurred during file processing: {str(e)}"})
+
+
+if __name__ == '__main__':
+    uvicorn.run(app,host = "127.0.0.1",port = 8000)
