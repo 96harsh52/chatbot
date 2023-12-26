@@ -4,7 +4,6 @@ import tiktoken
 import ast
 import os
 import time
-from IPython import display
 from scipy import spatial
 # from sqlalchemy.util import asyncio
 
@@ -14,7 +13,7 @@ GPT_MODEL = "gpt-3.5-turbo"  # Update to the latest available model
 # new
 from openai import OpenAI
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "API key"
 # Initialize OpenAI client
 client = OpenAI()
 # Set your OpenAI API key
@@ -110,26 +109,6 @@ async def ask(query: str,
         {"role": "system", "content": content_here},
         {"role": "user", "content": message},
     ]
-    # completion_reason = None
-    # response = ""
-    # while not completion_reason or completion_reason == "length":
-    #     openai_stream = client.chat.completions.create(
-    #         model=model,
-    #         messages=messages,
-    #         temperature=0.0,
-    #         stream=True,
-    #     )
-        # for chunk in openai_stream:
-        #     if chunk.choices[0].delta.content is not None:
-        #         yield chunk.choices[0].delta.content
-        #         time.sleep(0.25)
-        # for line in openai_stream:
-        #     completion_reason = line["choices"][0]["finish_reason"]
-        #     if "content" in line["choices"][0].delta:
-        #         current_response = line["choices"][0].delta.content
-        #         print(current_response)
-        #         yield current_response
-        #         time.sleep(0.25)
 
 
     stream = client.chat.completions.create(
