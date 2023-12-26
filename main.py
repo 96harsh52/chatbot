@@ -100,5 +100,19 @@ def process_with_path_parameter(input_directory: str):
         return JSONResponse(content={"status": 401, "message": f"An error occurred during file processing: {str(e)}"})
 
 
+
+from fastapi.responses import StreamingResponse
+class InputData(BaseModel):
+    query: str
+    website_name: str
+
+@app.post("/ask", tags=["chatbot"])
+def ask_question(data: InputData):
+    try:
+        return StreamingResponse(ask(data.query, data.website_name), media_type="text/plain")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == '__main__':
     uvicorn.run(app,host = "127.0.0.1",port = 8000)
