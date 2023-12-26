@@ -7,6 +7,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from embedding import process_files
 import uvicorn
+from chatbot import ask
 from web_scrap import extract_text_from_url
 from file_upload import save_uploaded_file, extract_text_from_pdf, extract_text_from_ppt
 
