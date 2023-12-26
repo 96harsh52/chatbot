@@ -11,7 +11,6 @@ from pptx import Presentation
 os.environ["OPENAI_API_KEY"] = "Api-key"
 # Initialize OpenAI client
 client = OpenAI()
-=====
 
 def read_text_file(file_path):
     try:
@@ -223,6 +222,6 @@ def process_files(input_directory, output_directory):
 
 # Example usage
 # if __name__ == "__main__":
-#     input_directory = r'D:\CG-Vks\chatbot_10\data\www.allamericanpha.com'
+#     input_directory = r'D:\CG-Vks\chatbot_10\data\www.allamericanpha_1.com'
 #     output_directory = r'D:\CG-Vks\chatbot_10\New folder'
 #     print(process_files(input_directory, output_directory))
