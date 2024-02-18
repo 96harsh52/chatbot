@@ -1,3 +1,29 @@
+# Dynamic Multi-Website Chatbot
+
+This project showcases a dynamic multi-website chatbot designed to streamline user interactions with various company websites. Leveraging advanced technologies including ChatGPT, LangChain, Python, and SQL, the chatbot offers a seamless experience for users seeking information about different companies and their services.
+
+## Features:
+- **Web Scraping and Data Collection**: Utilizes web scraping techniques to gather up-to-date information from multiple company websites. Integrated Google Form for efficient collection and updating of company details such as phone numbers and operating hours.
+- **Natural Language Processing**: Employs ChatGPT and LangChain for advanced natural language processing, enabling the chatbot to interpret user queries accurately.
+- **Dynamic Website Data Retrieval**: Dynamically redirects users to relevant website data based on the services offered by each company, enhancing user experience and efficiency.
+- **Human Interaction Integration**: Incorporates a human interaction component for handling complex queries. Seamlessly transitions to customer service executives when necessary, providing detailed chat summaries for effective assistance.
+
+## Tech Stack:
+- ChatGPT
+- LangChain
+- Python
+- SQL
+
+## Usage:
+1. Clone the repository to your local machine.
+2. Install the required dependencies.
+3. Run the chatbot application.
+4. Interact with the chatbot by inputting queries and exploring company data.
+
+## Contribution:
+Contributions are welcome! Feel free to fork the repository and submit pull requests for any improvements or additional features.
+
+
 ## Prerequisites
 Python 3.9
 pip (Python package installer)
@@ -69,3 +95,6 @@ Update the upload_file function in main.py to save files to your AWS S3 bucket.
 Update the process_with_path_parameter function in main.py to read and write files from/to your AWS S3 bucket.
 
 Make sure to configure your AWS credentials for authentication.
+
+## License:
+This project is licensed under the [MIT License](LICENSE).
